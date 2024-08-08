@@ -1,0 +1,37 @@
+PAGES:
+1) Group
+2) GroupDetail
+3) NewGroup
+4) EditGroup
+5) Payment
+6) PaymentDetail
+7) NewPayment
+8) EditPayment
+
+COMPONENTS:
+1) GroupsList
+2) GroupItem
+3) GroupForm
+4) PaymentsList
+5) PaymentItem
+6) PaymentForm
+
+LOGIC: 
+1) Get, Send Group/Payment from/to Datebase
+2) Add, Edit, Remove Group/Payment for Datebase
+3) Sort and Analize Payments
+4) Graphs for analyzing Payments
+
+
+WORK WITH GROUPS LOADER. LOAD GROUPS ONLY IF NEEDED (FIRST TIME VISIT PAGE OR GROUPS DATA CHANGED - NEW/EDITED)
+
+1) Submitting new group doesnt fetch groups -> Groups page then isnt updated
+2) Editing User Info fucks up group patch fetching
+3) Images are not picked up from datebase after reloading page
+4) Join navigations, make gravient bg color
+
+1) Group Detail rename to connect with Payments
+2) Group Detail component
+
+
+//email, name from auth not used
