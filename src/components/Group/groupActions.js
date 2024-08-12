@@ -3,16 +3,19 @@ import generateId from "../../util/generateId";
 
 export const action = async ({ request, params }) => {
   const method = request.method;
+
+  const usersId = [];
+  const data = await request.formData();
+  const users = data.getAll("users").map((user) => {
+    const userData = JSON.parse(user);
+    usersId.push(userData.email);
+    return userData;
+  });
+
+  const id = data.get("groupId");
+
   switch (method) {
     case "PUT": {
-      const usersId = [];
-      const data = await request.formData();
-      const users = data.getAll("users").map((user) => {
-        const userData = JSON.parse(user);
-        usersId.push(userData.email);
-        return userData;
-      });
-
       const id = generateId();
 
       const groupData = {
@@ -52,17 +55,7 @@ export const action = async ({ request, params }) => {
       }
     }
     case "PATCH": {
-      console.log("trying to patch");
-      const usersId = [];
-      const data = await request.formData();
-      const users = data.getAll("users").map((user) => {
-        const userData = JSON.parse(user);
-        usersId.push(userData.email);
-        return userData;
-      });
-
-      const id = data.get("groupId");
-      console.log(id);
+      console.log("patching...");
 
       const groupData = {
         name: data.get("title"),
@@ -101,8 +94,35 @@ export const action = async ({ request, params }) => {
       }
     }
     case "DELETE": {
-      break;
-      // return fakeDeleteProject(params.id);
+      console.log('deleting...')
+
+      if (!id) {
+        throw json({ message: "Group ID is required for deletion." }, { status: 400 });
+      }
+
+      try {
+        // Delete the group
+        const deleteResponse = await fetch(
+          `https://moneyapp-c5bd1-default-rtdb.europe-west1.firebasedatabase.app/groups/${id}.json`,
+          {
+            method: "DELETE",
+          }
+        );
+
+        if (!deleteResponse.ok) {
+          const errorData = await deleteResponse.json();
+          console.error("Firebase Error:", errorData);
+          throw json({ message: "Could not delete group." }, { status: 422 });
+        }
+
+        // update user data after deletion
+        await updateUserData(usersId, id, method);
+
+        return redirect("/groups");
+      } catch (error) {
+        console.error("Error during delete operation:", error);
+        throw json({ message: "Could not complete the delete operation." }, { status: 500 });
+      }
     }
     default: {
       throw new Response("", { status: 405 });
@@ -110,7 +130,7 @@ export const action = async ({ request, params }) => {
   }
 };
 
-async function updateUserData(usersId, id) {
+async function updateUserData(usersId, id, mode = "PATCH") {
   try {
     const userResponse = await fetch(
       "https://moneyapp-c5bd1-default-rtdb.europe-west1.firebasedatabase.app/users.json"
@@ -135,9 +155,18 @@ async function updateUserData(usersId, id) {
       for (const key of Object.keys(usersData)) {
         console.log("Checking user data for key:", key);
         if (usersData[key].email === email) {
-          const groupPermission = {
-            [id]: true,
-          };
+          let groupPermission
+          if(mode === 'PATCH'){
+            groupPermission = {
+              [id]: true,
+            };
+          }
+          else if(mode === 'DELETE'){
+            groupPermission = {
+              [id]: null,
+            };
+          }
+          
 
           console.log("Matched user:", email, key, groupPermission);
 

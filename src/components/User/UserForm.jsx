@@ -39,6 +39,7 @@ function UserDetails() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    console.log(event.target)
     if (window.confirm("Are you sure?")) {
       dispatch(
         updateUser({

@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 function GroupsList({ userGroups }) {
   return (
-    <div className="p-6 font-sans w-3/5">
+    <div className="p-6 font-sans w-3/5 mx-auto">
       <h1 className="text-3xl font-bold mb-6">All Groups</h1>
       {Object.keys(userGroups).length > 0 ? (
         <ul className="space-y-4">

@@ -3,12 +3,29 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = [
   {
     id: "0",
-    category: "test",
+    title: "Test",
+    category: "icon",
     cost: 1,
     currency: "zloty",
     userId: "t123",
     userName: "tester",
-    date: new Date("08-08-2024"),
+    date: new Date("09-08-2024").toLocaleDateString('en-GB', {
+      day: '2-digit',
+      month: '2-digit'
+    }),
+    hidden: true,
+  },  {
+    id: "1",
+    title: "Test2",
+    category: "icon",
+    cost: 1.2,
+    currency: "zloty",
+    userId: "t123",
+    userName: "tester",
+    date: new Date("09-08-2024").toLocaleDateString('en-GB', {
+      day: '2-digit',
+      month: '2-digit'
+    }),
     hidden: true,
   },
 ];

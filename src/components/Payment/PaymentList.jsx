@@ -6,7 +6,7 @@ function PaymentList({ size }) {
   console.log(paymentsArray);
 
   return (
-    <table>
+    <section className="max-w-screen-lg p-1 my-2 mx-auto border-2 rounded-md border-stone-400 overflow-hidden bg-pink-200">
       {paymentsArray.map((payment) => (
         <PaymentItem
           id={payment.id}
@@ -15,13 +15,14 @@ function PaymentList({ size }) {
           parameters={{
             category: payment.category,
             cost: payment.cost,
+            title: payment.title,
             currency: payment.currency,
             date: payment.date,
             user: payment.userName,
           }}
         />
       ))}
-    </table>
+    </section>
   );
 }
 

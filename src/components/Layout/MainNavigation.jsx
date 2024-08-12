@@ -39,11 +39,10 @@ function MainNavigation() {
   }
 
   return (
-    <header className="flex px-8 py-2 bg-fuchsia-950 text-xs">
-      <nav className="grow">
-        <ul className="flex gap-12">
+      <nav className="flex px-8 py-2 bg-fuchsia-950 text-xs">
+        <ul className="flex gap-8 grow">
           {menu.map((menuElement, index) => (
-            <li key={index} className="text-center basis-24">
+            <li key={index} className="text-center basis-1/6">
               {menuElement.link ? (
                 <NavLink
                   to={menuElement.link}
@@ -68,7 +67,6 @@ function MainNavigation() {
           ))}
         </ul>
       </nav>
-    </header>
   );
 }
 

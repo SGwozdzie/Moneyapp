@@ -6,9 +6,9 @@ function GroupLayout() {
   return (
     <>
       <GroupNavigation />
-      <main className="bg-stone-100 container p-2">
+      <div className="p-2 w-4/5 mt-4 mx-auto border-x-2 border-pink-900">
         <Outlet />
-      </main>
+      </div>
     </>
   );
 }

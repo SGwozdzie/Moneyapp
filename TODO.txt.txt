@@ -21,6 +21,7 @@ LOGIC:
 2) Add, Edit, Remove Group/Payment for Datebase
 3) Sort and Analize Payments
 4) Graphs for analyzing Payments
+5) Check for Group deletion. It probably set ID to null not deleting it in datebase
 
 
 WORK WITH GROUPS LOADER. LOAD GROUPS ONLY IF NEEDED (FIRST TIME VISIT PAGE OR GROUPS DATA CHANGED - NEW/EDITED)

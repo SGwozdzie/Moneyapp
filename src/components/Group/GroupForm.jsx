@@ -4,6 +4,7 @@ import {
   useNavigate,
   useNavigation,
   useActionData,
+  useSubmit,
 } from "react-router-dom";
 import { useSelector, shallowEqual } from "react-redux";
 import Button from "../UI/Button";
@@ -20,6 +21,7 @@ function GroupForm({ method, group, mode = "new", groupId = "null" }) {
   const data = useActionData();
   const navigate = useNavigate();
   const navigation = useNavigation();
+  const submit = useSubmit()
 
   const isSubmitting = navigation.state === "submitting";
 
@@ -38,6 +40,13 @@ function GroupForm({ method, group, mode = "new", groupId = "null" }) {
 
   const handleCancel = () => {
     navigate("..");
+  };
+
+  const handleDeleteGroup = (event) => {
+    event.preventDefault();
+    if (window.confirm("Are you sure you want to delete this group?")) {
+      submit(event.target, { method: 'DELETE' });
+    }
   };
 
   const handleAddUser = useCallback(
@@ -199,12 +208,17 @@ function GroupForm({ method, group, mode = "new", groupId = "null" }) {
         )}
       </div>
       <div className="flex justify-between">
-        <Button type="button" onClick={handleCancel} className="bg-red-500">
+        {mode === 'edit' ?         <><Button type="submit" disabled={isSubmitting} onClick={handleDeleteGroup} className="bg-red-700">
+          Delete
+        </Button><Button type="submit" disabled={isSubmitting}>
+          {isSubmitting ? "Saving..." : "Save changes"}
+        </Button></> :        <><Button type="button" onClick={handleCancel} className="bg-red-500">
           Cancel
-        </Button>
-        <Button type="submit" disabled={isSubmitting}>
+        </Button><Button type="submit" disabled={isSubmitting}>
           {isSubmitting ? "Submitting..." : "Submit"}
-        </Button>
+        </Button></> }
+
+        
       </div>
     </Form>
   );

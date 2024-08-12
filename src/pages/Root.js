@@ -4,12 +4,12 @@ import MainNavigation from "../components/Layout/MainNavigation";
 
 function RootLayout() {
   return (
-    <>
+    <div className="flex flex-col min-h-full">
       <MainNavigation />
-      <main className="bg-stone-100 container p-2">
+      <main className="bg-stone-200 p-2 grow">
         <Outlet />
       </main>
-    </>
+    </div>
   );
 }
 
